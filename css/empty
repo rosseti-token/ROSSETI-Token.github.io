@@ -1,0 +1,2601 @@
+.well-known/
+/cdn/press/
+/img/graphics/about/src/
+/img/graphics/landing/src/
+ads.txt
+blog/
+cache/
+compatibility2.php
+docs/
+error_log
+favicon.ico
+googlefd778325c5a53aa8.html
+latest-appimage.php
+latest-windows.php
+/lib/compat/
+/lib/cronjob/
+robots.txt
+rpcs4.php
+update/
+wiki/
+RewriteEngine on
+Options All -Indexes
+
+# Security flags for HTML headers
+<IfModule mod_headers.c>
+	# Protect against XSS attacks
+	Header set X-XSS-Protection "1; mode=block"
+	# Protect against page-framing and click-jacking
+	Header always append X-Frame-Options SAMEORIGIN
+	# Protect against content-sniffing (MIME)
+	Header set X-Content-Type-Options nosniff
+</IfModule>
+
+# Unless directory, remove trailing slash
+RewriteCond %{HTTP_HOST} !^wiki\.rpcs3\.net$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
+RewriteRule ^([^/]+)/$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# Redirect external .php requests to extension less url
+RewriteCond %{HTTP_HOST} !^wiki\.rpcs3\.net$ [NC]
+RewriteCond %{THE_REQUEST} ^(.+)\.php([#?][^\ ]*)?\ HTTP/
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
+RewriteRule ^(.+)\.php$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# Resolve .php file for extension-less php urls
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
+RewriteRule ^([^/.]+)$ $1.php [L]
+
+# Disables page caching for real-time updating
+# <filesMatch "\.(html|htm|js|css|php)$">
+# FileETag None
+# Header unset ETag
+# Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+# Header set Pragma "no-cache"
+# Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+# </filesMatch>
+
+# Compatibility: Rewrite URLs
+Redirect "/nightly" "/compatibility?b"
+Redirect "/builds" "/compatibility?b"
+Redirect "/compat" "/compatibility"
+Redirect "/library" "/compatibility?l"
+
+# Assigns an error page
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
+ErrorDocument 401 /401.php
+ErrorDocument 400 /400.php
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - 400</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body style="background: #000;">
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-backdrop darkmode-header" style="position:fixed;">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+			  <div class="wavebar-svg-object"></div>
+			  <div class="wavebar-svg-object"></div>
+			</div>
+		</div>
+		<div class="error-con-content">
+			<div class='error-ico-content' style="background: url('/img/icons/errors/400.png') no-repeat center; background-size:40px;">
+			</div>
+			<div class='error-tx1-content pulsate'>
+				<h1>Bad Request</h1>
+			</div>
+			<div class='error-tx2-content'>
+				<p>
+					 Your request was invalid or unsupported
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - 401</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body style="background: #000;">
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-backdrop darkmode-header" style="position:fixed;">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+			  <div class="wavebar-svg-object"></div>
+			  <div class="wavebar-svg-object"></div>
+			</div>
+		</div>
+		<div class="error-con-content">
+			<div class='error-ico-content' style="background: url('/img/icons/errors/401.png') no-repeat center; background-size:40px;">
+			</div>
+			<div class='error-tx1-content pulsate'>
+				<h1>Unauthorized</h1>
+			</div>
+			<div class='error-tx2-content'>
+				<p>
+					 Access unauthorized due to invalid authentication credentials
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - 403</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body style="background: #000;">
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-backdrop darkmode-header" style="position:fixed;">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+			  <div class="wavebar-svg-object"></div>
+			  <div class="wavebar-svg-object"></div>
+			</div>
+		</div>
+		<div class="error-con-content">
+			<div class='error-ico-content' style="background: url('/img/icons/errors/403.png') no-repeat center; background-size:40px;">
+			</div>
+			<div class='error-tx1-content pulsate'>
+				<h1>Unauthorized<</h1>
+			</div>
+			<div class='error-tx2-content'>
+				<p>
+					 This page or file directory is forbidden
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - 404</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body style="background: #000;">
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-backdrop darkmode-header" style="position:fixed;">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+			  <div class="wavebar-svg-object"></div>
+			  <div class="wavebar-svg-object"></div>
+			</div>
+		</div>
+		<div class="error-con-content">
+			<div class='error-ico-content' style="background: url('/img/icons/errors/404.png') no-repeat center; background-size:40px;">
+			</div>
+			<div class='error-tx1-content pulsate'>
+				<h1>Not Found</h1>
+			</div>
+			<div class='error-tx2-content'>
+				<p>
+					 This page cannot be found on the host server
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+An error has occurred when requesting <!--#echo var="REQUEST_URI" -->.
+<br>
+We are currently experiencing a downtime period.
+Please try again later.
+<!-- 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              --> 
+
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - About</title>
+<meta charset="utf-8">
+<meta name="description" content="ROSSETI">
+<meta name="keywords" content="ROSSETI">
+<meta name="author" content="ROSSETI">
+<meta name="copyright" content="ROSSETI">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-container darkmode-header">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+				<div class="wavebar-svg-object">
+				</div>
+				<div class="wavebar-svg-object">
+				</div>
+			</div>
+		</div>
+		<div class='banner-con-title fade-up-onstart'>
+			<div class='banner-tx1-title fade-up-onstart pulsate'>
+				<h1>Binance</h1>
+			</div>
+			<div class='banner-con-divider'>
+			</div>
+			<div class='banner-tx2-title fade-up-onstart'>
+				<p>
+					 Биржа
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class="landing-con-panel" style="background: url('/img/graphics/panels/about.jpg') no-repeat center;">
+				<div class='landing-ovr-panel'>
+					<div class='landing-tx1-panel'>
+						<h2>ROSSETI</h2>
+					</div>
+				</div>
+			</div>
+			<div class='splitter-con-container'>
+				<div class='splitter-txt-wrapper'>
+					<div class='container-con-block darkmode-block'>
+						<div class='container-con-wrapper'>
+							<div class='container-tx1-block darkmode-txt'>
+								<div class='container-emp-block'>
+								</div>
+								<h2>Binance</h2>
+							</div>
+							<div class='container-tx2-block darkmode-txt'>
+								<p> 
+Для Binance, регулирование в криптосекторе является ключом к росту всей отрасли. Об этом сообщил генеральный директор Чанпэн Чжао в публичном письме. Текст был опубликован после нескольких недель споров вокруг Binance. Сначала события в UK с запрет на Binance Market Limited, один из филиалов Binance в Великобритании. Тогда Каймановы острова, что бросило вызов отсутствие авторизации обмена. Наконец, риск коллективного иска из Италии из-за проблем с платформой, из-за которых группа инвесторов потеряла свои деньги. Все это пролило свет на положение крупнейшей в мире биржи по отношению к регулирующим органам. Генеральный директор и учредитель Чанпэн Чжао предпринял прямые действия, чтобы прояснить любые сомнения или подозрения. В своем текст, CZ ясно дали понять, что подход Binance всегда заключался в защите потребителей. Об этом свидетельствуют не только системы безопасности, такие как Чрезвычайный фонд обеспеченных активов (SAFU) но также с помощью строгих процедур, принятых биржей до листинга, или даже руководств и Академии Binance для обучения трейдеров. <br>
+									<br>
+									 CZ говорит, что Binance также всегда сотрудничал с властями в случае расследования. В 2021 году биржа вмешалась в 5,600 подозреваемых дел, самый известный из которых был связан с отмыванием денег в результате операций даркнета и кибератак на сумму 500 миллионов долларов.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='splitter-img-container splitter-con-right'>
+					<div class='splitter-img-wrapper' style="background: url('/img/graphics/about/project.jpg') no-repeat center; background-size: cover;">
+					</div>
+				</div>
+			</div>
+			<div class='splitter-con-container'>
+				<div class='splitter-img-container splitter-con-left'>
+					<div class='splitter-img-wrapper' style="background: url('/img/graphics/about/history.jpg') no-repeat center; background-size: cover;">
+					</div>
+				</div>
+				<div class='splitter-txt-wrapper'>
+					<div class='container-con-block darkmode-block'>
+						<div class='container-con-wrapper'>
+							<div class='container-tx1-block darkmode-txt'>
+								<div class='container-emp-block'>
+								</div>
+								<h2>История</h2>
+							</div>
+							<div class='container-tx2-block darkmode-txt'>
+								<p>
+									 Криптовалютная биржа Binance была основана в 2017 году и стала глобальной блокчейн-компанией, предоставляющей полный спектр услуг для инвесторов и трейдеров. Главой Binance является Чанпэн Чжао[5] (Changpeng Zhao) — более известный в криптосообществе, как CZ. CZ долгое время занимался разработкой программного обеспечения для торговли фьючерсами на Уолл-стрит. В 2005 году CZ покинул пост главы команды по исследованию и развитию Bloomberg Tradebook Futures и переехал в Шанхай. Там он основал компанию Fusion Systems. После того как он открыл для себя биткоин, работал в Blockchain.info в качестве директора по технологиям и других проектах. В 2017 году в рамках ICO Binance было привлечено около $15 млн. На первом этапе число зарегистрированных пользователей превысило 20 тысяч человек. В начале 2018 года Binance даже пришлось приостановить регистрацию новых пользователей для обновления архитектуры. После того как через несколько дней регистрацию возобновили, в первый час на бирже зарегистрировалось около 240 тысяч пользователей. <br>
+									<br>
+									 В январе 2018 года Binance вышла на первое место среди криптобирж мира по объёму торгов, а CZ попал на обложку журнала Forbes. <br>Данные биржи по итогам 2020 года:<br>
+
+    15 млрд $ США — исторический максимум спотовой торговли за 24 часа<br>
+    3,88 млрд $ США — средний дневной объём торгов<br>
+    16 700 000 пользователей Binance по всему миру<br>
+    184 токена добавлено на Binance (прирост со 151).<br>
+    591 торговая пара на Binance (прирост с 396).<br>
+    26 языков добавлено на сайт Binance (прирост с 16).<br>
+    11 языков поддерживается клиентской службой Binance.<br>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='splitter-con-container'>
+				<div class='splitter-txt-wrapper'>
+					<div class='container-con-block darkmode-block'>
+						<div class='container-con-wrapper'>
+							<div class='container-tx1-block darkmode-txt'>
+								<div class='container-emp-block'>
+								</div>
+								<h2>Зарождение биржи</h2>
+							</div>
+							<div class='container-tx2-block darkmode-txt'>
+								<p>
+									 Идея создания биржи, которая будет охватывать крипто и фиатные валюты пришла еще в 2013 года, но по мнению Чжао – было слишком рано. В 2015 году на рынке появилась биржа Poloniex, на которую обратил внимание и Чанпен. Посмотрев на ее суточный оборот он снова пришел к выводу, что слишком рано. И только в 2017 году, когда крипто-рынок достаточно вырос и началась ICO эпоха, стартовала работа над созданием биржи Binance. <br>
+
+1 июля 2017 года было проведено ICO: продавались токены Binance Coin (BNB), было предложено 100 млн BNB, которые раскупили за сутки. Суммы вырученных средств составляла $15 млн. На то время, это были небольшие деньги, которые удалось привлечь посредством первичного публичного размещения токенов, но это хватило для запуска Binance. Интересно то, что биржа запустилась все через 11 дней после окончания ICO.  <br>
+
+По словам CZ, запустить биржу так быстро помогло наличие готовых рабочих систем, производством которых занималась команда разработчиков Binance за два года до его релиза. Нужна была лишь команда по маркетингу и отдел поддержки, на создание которых не потребовалось много времени. Изначальными услугами биржи были спотовая торговли и Trust Wallet – официальный кошелек биржи. <br>
+
+Еще одним интересным фактом является то, что решение проводить ICO Binance было принято 14 июня 2017 года, то есть практически за 2 недели до его старта, и за месяц до начала работы самой биржи. <br>
+									
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='splitter-img-container splitter-con-right'>
+					<div class='splitter-img-wrapper' style="background: url('/img/graphics/about/team.jpg') no-repeat center; background-size: cover;">
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+				
+								<a href="https://accounts.binance.com/ru/register?ref=QOJFLCRE&yclid=4258615902464638975">
+								
+																<div class="patreon-btn-button">
+								<div class="patreon-ico-button">
+								</div>
+								<div class="patreon-tx1-button">
+									<span>BINANCE</span>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php include 'lib/module/inc-footer.php';?>
+</div>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - Alipay</title>
+<meta charset="utf-8">
+<meta name="description" content="ROSSETI emulator and debugger written in C++ for Windows, Linux and BSD.">
+<meta name="keywords" content="ROSSETI, emulator, debugger, windows, linux, bsd, open source, nekotekina, kd11, alipay">
+<meta name="author" content="ROSSETI">
+<meta name="copyright" content="ROSSETI">
+<meta name="robots" content="noindex, nofollow">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-backdrop darkmode-header" style="position:fixed;">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+				<div class="wavebar-svg-object">
+				</div>
+				<div class="wavebar-svg-object">
+				</div>
+			</div>
+		</div>
+		<div class='alipay-con-alipay'>
+			<div class="alipay-ico-logo">
+			</div>
+			<a href='/img/icons/qr/alipay.png' target="_blank">
+			<div class="alipay-ico-alipay">
+			</div>
+			</a>
+			<div class="alipay-tx1-prompt pulsate">
+				<h1>ROSSETI</h1>
+			</div>
+			<div class="alipay-tx2-prompt pulsate">
+				<span>ROSSETI Token</span>
+			</div>
+		</div>
+		<div class="alipay-con-footer">
+			<p>
+				 © 2021 ROSSETI VK.
+			</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - Branding</title>
+<meta charset="utf-8">
+<meta name="description" content="ROSSETI.">
+<meta name="keywords" content="ROSSETI emulator, debugger, windows, linux, bsd, open source, nekotekina, kd11, branding">
+<meta name="author" content="ROSSETI">
+<meta name="copyright" content="ROSSETI">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-container darkmode-header">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+				<div class="wavebar-svg-object">
+				</div>
+				<div class="wavebar-svg-object">
+				</div>
+			</div>
+		</div>
+		<div class='banner-con-title fade-up-onstart'>
+			<div class='banner-tx1-title fade-up-onstart pulsate'>
+				<h1>Branding</h1>
+			</div>
+			<div class='banner-con-divider'>
+			</div>
+			<div class='banner-tx2-title fade-up-onstart'>
+				<p>
+					 Fundamentals and guidelines 
+			</div>
+		</div>
+	</div>
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class="landing-con-panel" style="background: url('/img/graphics/panels/branding.jpg') no-repeat center;">
+				<div class='landing-ovr-panel'>
+					<div class='landing-tx1-panel'>
+						<h2>ROSSETI</h2>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						<h2>Core Logo</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 The core logo is used as the main icon for the ROSSETI executable. It is also used as the favicon for the website in addition to rich embed previews for rich embed capable applications such as Discord. We provide this icon in 2 styles and in .PNG and SVG file formats for maximum usability and scalability at 4096 x 4096 pixels.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='palette-con-container'>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/core-color.png) center center / 100px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/core-color-psd.psd' download>
+							<div class='palette-btn-download'>
+								<span>.PSD</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/core-color-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-b'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/core-black.png) center center / 100px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/core-black-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/core-black-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/core-white.png) center center / 100px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/core-white-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/core-white-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						<h2>Minimal Logo</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 The minimal logo is used in discrete branding instances for quick recognition. It is used as the global home button for the website, presentations and screenshot / video watermarks. We provide this icon in 3 styles and in both .PNG and .SVG file formats for maximum usability and scalability at 4096 x 4096 pixels.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='palette-con-container'>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/minimal-color.png) center center / 100px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/minimal-color-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/minimal-color-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-b'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/minimal-black.png) center center / 100px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/minimal-black-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/minimal-black-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/minimal-white.png) center center / 100px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/minimal-white-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/minimal-white-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						<h2>Full Logo</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 Similarly to the minimal logo, the full logo is the orginal logo and is used in spacious branding instances. It is primarily used in presentations and screenshot / video watermarks. We provide this icon in 3 styles and in both .PNG and .SVG file formats for maximum usability and scalability at 5000 x 1095 pixels.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='palette-con-container'>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/full-color.png) center center / 250px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/full-color-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/full-color-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-b'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/full-black.png) center center / 250px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/full-black-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/full-black-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a'>
+						<div class='palette-con-image' style="background: url(/img/graphics/branding/full-white.png) center center / 250px no-repeat;">
+						</div>
+						<div class='palette-con-download'>
+							<a href='/cdn/branding/full-white-svg.svg' download>
+							<div class='palette-btn-download'>
+								<span>.SVG</span>
+							</div>
+							</a>
+							<a href='/cdn/branding/full-white-png.png' download>
+							<div class='palette-btn-download'>
+								<span>.PNG</span>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						<h2>Colors</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 Our color palette stems from the usage of colors on the website. 
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='palette-con-container'>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a palette-swatch-a'>
+						<div class='palette-con-text'>
+							<h3>White</h3>
+							<p>
+								<span class="palette-con-text-bold">HEX</span> #686DE0
+							</p>
+							<p>
+								<span class="palette-con-text-bold">RGB</span> rgb(104, 109, 224, 1)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">HSL</span> hsl(238deg, 66%, 65%)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">CMYK</span> 54, 51, 0, 12
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-b palette-swatch-b'>
+						<div class='palette-con-text'>
+							<h3>Blue</h3>
+							<p>
+								<span class="palette-con-text-bold">HEX</span> #4E34C9
+							</p>
+							<p>
+								<span class="palette-con-text-bold">RGB</span> rgb(78, 52, 201, 1)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">HSL</span> hsl(251deg, 59%, 50%)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">CMYK</span> 61, 74, 0, 21
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a palette-swatch-c'>
+					</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='palette-con-container'>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a palette-swatch-d'>
+						<div class='palette-con-text'>
+							<h3>Midnight</h3>
+							<p>
+								<span class="palette-con-text-bold">HEX</span> #212947
+							</p>
+							<p>
+								<span class="palette-con-text-bold">RGB</span> rgb(33, 41, 71, 1)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">HSL</span> hsl(227deg, 37%, 20%)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">CMYK</span> 54, 42, 0, 72
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-b palette-swatch-e'>
+						<div class='palette-con-text'>
+							<h3>Deep Midnight</h3>
+							<p>
+								<span class="palette-con-text-bold">HEX</span> #191F36
+							</p>
+							<p>
+								<span class="palette-con-text-bold">RGB</span> rgb(25, 31, 54, 1)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">HSL</span> hsl(228deg, 37%, 16%)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">CMYK</span> 54, 43, 0, 79
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a palette-swatch-f'>
+						<div class='palette-con-text'>
+							<h3>Deepest Midnight</h3>
+							<p>
+								<span class="palette-con-text-bold">HEX</span> #111525
+							</p>
+							<p>
+								<span class="palette-con-text-bold">RGB</span> rgb(17, 17, 37, 1)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">HSL</span> hsl(228deg, 37%, 11%)
+							</p>
+							<p>
+								<span class="palette-con-text-bold">CMYK</span> 54, 43, 0, 85
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='palette-con-container'>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a palette-swatch-g'>
+											
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-b palette-swatch-h'>
+					
+						</div>
+					</div>
+				</div>
+				<div class='palette-con-outer'>
+					<div class='palette-con-inner-a palette-swatch-i'>
+					
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Press Kit</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 Our press kit is an amalgamation of all of the assets previewed on this page and more in a single package. It enables those who wish to promote the project and its development through high-quality digital media. We provide high-resolution assets such as our logo in 3 iterations, our supported operating systems, supported CPU and GPU hardware, rendering backends and much more.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="generic-con-button-single">
+				<a href='/cdn/press/Press%20Kit.zip' download>
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/presskit-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>Download Press Kit <span class="generic-tx2-label">268 MB</span></span>
+					</div>
+				</div>
+				</a>
+			</div>
+			<?php include 'lib/module/inc-flaticon.php';?>
+		</div>
+	</div>
+</div>
+<?php include 'lib/module/inc-footer.php';?>
+</body>
+</html>
+<?php
+if(!@include_once("lib/compat/index.php")) throw new Exception("Compat: Compatibility is missing. Failed to include Compatibility");
+?>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - Disclaimer</title>
+<meta charset="utf-8">
+<meta name="description" content="RPCS3 is a multi-platform open-source Sony PlayStation 3 emulator and debugger written in C++ for Windows, Linux and BSD.">
+<meta name="keywords" content="rpcs3, playstation, playstation 3, ps3, emulator, debugger, windows, linux, bsd, open source, nekotekina, kd11, disclaimer">
+<meta name="author" content="RPCS3">
+<meta name="copyright" content="RPCS3">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-container darkmode-header">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+				<div class="wavebar-svg-object">
+				</div>
+				<div class="wavebar-svg-object">
+				</div>
+			</div>
+		</div>
+		<div class='banner-con-title fade-up-onstart'>
+			<div class='banner-tx1-title fade-up-onstart pulsate'>
+				<h1>Disclaimer</h1>
+			</div>
+			<div class='banner-con-divider'>
+			</div>
+			<div class='banner-tx2-title fade-up-onstart'>
+				<p>
+					 Legal disclaimer and copyright information
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class="landing-con-panel" style="background: url('/img/graphics/panels/disclaimer.jpg') no-repeat center;">
+				<div class='landing-ovr-panel'>
+					<div class='landing-tx1-panel'>
+						<h2>Legal Jargon</h2>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Trademarks and Copyright</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 All trademarks and copyright-written content found on this website belong to their respective owners.<br>
+							<br>
+							</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Intellectual Properties</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 This website displays various trademarks and copy-written content such as videogame logos, company logos. These different trademarks and copy-written content do not belong to us and are properties of their respective owners. This website is in no way affiliated with said companies or trademarks. This website’s only intention is to spread the word and endorse the content displayed.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Open-source Licensing</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 ROSSETI uses the GNU General Public License Version 2 (June 1991). According to the license, you are welcome to use ROSSETI and its source code for any purpose, but distributing RPOSSETI requires that the source code be released and attribution given. For more details on how the GNU General Public License system works, please refer to <a href="https://www.gnu.org/" target="_blank">GNU.org</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<?php include 'lib/module/inc-flaticon.php';?>
+			<div class="container-con-block darkmode-block">
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Sony Interactive Entertainment Proprietary Technologies</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 Use is subject to the copyright laws and the terms and conditions of the user's license.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Statement on Piracy and Illegal Acts</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 We do not promote piracy nor do we allow it under any circumstances. Any users conversing about piracy upon joining the Discord server, forums or GitHub community will receive administrative action. Please take the time to review copyright and video game software dumping laws and/or policies for your country before proceeding.<br>
+							<br>
+							 By following these instructions, you will do so at your own discretion. Should you follow these instructions against your local law, we shall not be held responsible for your actions.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Development and Experimentation</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 Additional information was obtained from various sources on the internet that include but is not limited to system hardware and software documentation. Most of this information can be found on the <a href='http://www.psdevwiki.com/' target="_blank"> </a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Google Analytics Statement</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 This website uses Google Analytics, a web analytics service provided by Google, Inc. (“Google”). Google Analytics uses “cookies”, which are text files placed on your computer, to help the website analyze how users use the site. The information generated by the cookie about your use of the website (including your IP address) will be transmitted to and stored by Google on servers in the United States . Google will use this information for the purpose of evaluating your use of the website, compiling reports on website activity for website operators and providing other services relating to website activity and internet usage.<br>
+							<br>
+							 Google may also transfer this information to third parties where required to do so by law, or where such third parties process the information on Google’s behalf. Google will not associate your IP address with any other data held by Google. You may refuse the use of cookies by selecting the appropriate settings on your browser, however please note that if you do this you may not be able to use the full functionality of this website. By using this website, you consent to the processing of data about you by Google in the manner and for the purposes set out above.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php include 'lib/module/inc-footer.php';?>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - Download</title>
+<meta charset="utf-8">
+<meta name="ROSSETI.">
+<meta name="keywords" content="ROSSETI, debugger, windows, linux, bsd, open source, nekotekina, kd11, download">
+<meta name="author" content="ROSSETI">
+<meta name="copyright" content="ROSSETI">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<?php
+// Compatibility utils must exist for this page to work at the moment
+// TODO: Handle behavior when compatibility plugin is not present?
+include 'lib/compat/objects/Build.php';
+$build = Build::get_latest();
+?>
+<div class="page-con-content">
+	<div class="banner-con-container darkmode-header">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+			  <div class="wavebar-svg-object"></div>
+			  <div class="wavebar-svg-object"></div>
+			</div>
+		</div>
+		<div class='banner-con-title fade-up-onstart'>
+			<div class='banner-tx1-title fade-up-onstart pulsate'>
+				<h1>Download</h1>
+			</div>
+			<div class='banner-con-divider'></div>
+			<div class='banner-tx2-title fade-up-onstart'>
+				<p>
+					 Download our latest releases
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="page-con-container">
+		<div class="page-in-container">
+		<div class="landing-con-panel" style="background: url('/img/graphics/panels/download.jpg') no-repeat center;">
+			<div class='landing-ovr-panel'>
+				<div class='landing-tx1-panel'><h2>Immortalize Your Library</h2></div>
+			</div>
+		</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'></div>
+						<h2>Latest Builds</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p class="download-desc">
+							 ROSSETI is under steady development and the binaries we produce are highly experimental. System requirements may vary depending on your hardware configuration. For the best experience, users should be running within the recommended system requirements. We cannot guarantee the performance of system specifications below the minimum requirements, but you're always welcome to experiment. Do not expect stable performance or consistent compatibility as changes are always being made to the codebase.<br>
+							 <br>
+							 If you come across any regressions upon a new release, please be sure to report your findings on our forum. See <a href="/quickstart">Quickstart</a> for more information.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='button-con-container'>
+				<a href='<?php echo $build->get_url_windows(); ?>' download>
+				<div class="button-con-wrapper button-left darkmode-panel">
+					<div class='button-ico-container' style="background: url('/img/icons/buttons/windows-h.png') no-repeat center;">
+					</div>
+					<div class="button-tx1-text darkmode-txt">
+						<span>
+						Download for Windows </span>
+					</div>
+				</div>
+				</a>
+				<a href='<?php echo $build->get_url_linux(); ?>' download>
+				<div class="button-con-wrapper button-right darkmode-panel">
+					<div class='button-ico-container' style="background: url('/img/icons/buttons/linux-h.png') no-repeat center;">
+					</div>
+					<div class="button-tx1-text darkmode-txt">
+						<span>
+						Download for Linux </span>
+					</div>
+				</div>
+				</a>
+			</div>
+			<div class='label-con-container'>
+				<div class="label-con-wrapper label-left darkmode-panel">
+					<div class="label-tx1-title darkmode-txt">
+						<span>SHA-256</span>
+					</div>
+					<div class='label-ico-container' style="background: url('/img/icons/buttons/sha.png') no-repeat center;">
+					</div>
+					<div class="label-tx1-text darkmode-txt" style="top: 8px;">
+						<span>
+						<?php echo $build->checksum_win; ?> </span>
+					</div>
+				</div>
+				<div class="label-con-wrapper label-right darkmode-panel">
+					<div class="label-tx1-title darkmode-txt">
+						<span>SHA-256</span>
+					</div>
+					<div class='label-ico-container' style="background: url('/img/icons/buttons/sha.png') no-repeat center;">
+					</div>
+					<div class="label-tx1-text darkmode-txt" style="top: 8px;">
+						<span>
+						<?php echo $build->checksum_linux; ?> </span>
+					</div>
+				</div>
+			</div>
+			<div class="binary-con-container">
+				<div class="binary-con-wrapper">
+					<div class='binary-tx1-content'>
+						<div class='binary-img-content darkmode-invert' style="background: url('/img/icons/buttons/version.png') no-repeat center; background-size:26px;">
+						</div>
+						<span class="darkmode-txt">
+						Current Build </span>
+					</div>
+					<div class="binary-tx2-content">
+						<span class="darkmode-txt">
+						<?php echo "v{$build->version} Alpha [{$build->fulldate}]"; ?> </span>
+					</div>
+				</div>
+				<div class="binary-con-wrapper">
+					<div class='binary-tx1-content'>
+						<div class='binary-img-content darkmode-invert' style="background: url('/img/icons/buttons/github.png') no-repeat center; background-size:26px;">
+						</div>
+						<span class="darkmode-txt">
+						Current Merge</span>
+					</div>
+					<div class="binary-tx2-content">
+						<span class="darkmode-txt">
+						<a href="<?php echo $build->get_url_pr(); ?>">#<?php echo $build->pr; ?></a>
+						(<a href="<?php echo $build->get_url_commit(); ?>"><?php echo $build->get_commit_short(); ?></a>)
+						by <a href="<?php echo $build->get_url_author(); ?>"><?php echo $build->author; ?></a>
+						</span>
+					</div>
+				</div>
+				<div class="binary-con-wrapper">
+					<div class='binary-tx1-content'>
+						<div class='binary-img-content darkmode-invert' style="background: url('/img/icons/buttons/filesize.png') no-repeat center; background-size:26px;">
+						</div>
+						<span class="darkmode-txt">
+						Current Size</span>
+					</div>
+					<div class="binary-tx2-content">
+						<span class="darkmode-txt">
+						Windows: <?php echo $build->get_size_mb_windows(); ?> MB, Linux: <?php echo $build->get_size_mb_linux(); ?> MB </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-con-content darkmode-slimbar" style="background:#f7f7f7">
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					
+				</div>
+			</div>
+			<div class='button-con-container'>
+				
+				<div class="button-con-wrapper button-left darkmode-panel">
+					<div class='button-ico-container' style="background: url('/img/icons/buttons/history-h.png') no-repeat center;">
+					</div>
+					<div class="button-tx1-text darkmode-txt">
+						<span>
+						Download Previous Builds </span>
+					</div>
+				</div>
+				</a>
+				<div class="label-con-wrapper label-right darkmode-panel">
+					<div class='label-ico-container darkmode-invert' style="background: url('/img/icons/buttons/commit.png') no-repeat center;">
+					</div>
+					<div class="label-tx1-text darkmode-txt">
+						<span>
+						For details, see <a href="https://github.com/" target="_blank">commits</a> via GitHub. </span>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>For Linux Users</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+												<br>
+							
+							<b>Compile on arch using AUR </b><span class="highlight darkmode-highlight">git clone https://aur.archlinux.org/</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>For BSD Users</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p class="download-desc">
+							
+							 <br>
+							 <br>
+							 <b>Install as a package </b><span class="highlight darkmode-highlight">pkg install</span>
+							 <br>
+							 <b>Compile using ports </b><span class="highlight darkmode-highlight">cd /usr/ports/emulators/ && make install clean</span>
+						 </p>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-con-content">
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Website Source Code</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 Downloading the website source allows you to clone, fork or contribute any enhancements via GitHub. <a href='https://github.com/' target="_blank">ROSSETI</a>, while the compatibility database is developed and maintained by <a href='https://github.com/AniLeo' target="_blank">ROSSETI</a>.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="generic-con-button ">
+				<a href='https://github.com/' target="_blank">
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/github-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>Website Repository <span class="generic-tx2-label">/daginatsuko</span></span>
+					</div>
+				</div>
+				</a>
+				<a href='https://github.com/' target="_blank">
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/github-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>Compatibility Repository <span class="generic-tx2-label">/anileo</span></span>
+					</div>
+				</div>
+				</a>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<h2>Press Kit and Documentation</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							Our press kit is an amalgamation of all of the assets previewed on the <a href='/branding'>branding</a> page and more in a single package. It enables those who wish to promote the project and its development through high-quality digital media. We provide high-resolution assets such as our logo in 3 iterations, our supported operating systems, supported CPU and GPU hardware, rendering backends and much more.
+							<br><br>
+							All information found in the documentation section was obtained by collecting and reviewing data from various sources around the web.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="generic-con-button ">
+				<a href='/cdn/press/Press%20Kit.zip' download>
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/presskit-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>Download Press Kit <span class="generic-tx2-label">268 MB</span></span>
+					</div>
+				</div>
+				</a>
+				<a href='/cdn/docs/Docs.zip' download>
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/docs-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>Download Documentation <span class="generic-tx2-label">36 MB</span></span>
+					</div>
+				</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<?php include 'lib/module/inc-footer.php';?>
+</div>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - FAQs</title>
+<meta charset="utf-8">
+<meta name="description" content="ROSSETI.">
+<meta name="keywords" content="ROSSETI">
+<meta name="author" content="ROSSETI">
+<meta name="copyright" content="ROSSETI">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-container darkmode-header">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+				<div class="wavebar-svg-object">
+				</div>
+				<div class="wavebar-svg-object">
+				</div>
+			</div>
+		</div>
+		<div class='banner-con-title fade-up-onstart'>
+			<div class='banner-tx1-title fade-up-onstart pulsate'>
+				<h1>FAQs</h1>
+			</div>
+			<div class='banner-con-divider'>
+			</div>
+			<div class='banner-tx2-title fade-up-onstart'>
+				<p>
+					 Frequently asked questions
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class="landing-con-panel panel-fadeUp" style="background: url('/img/graphics/panels/faq.jpg') no-repeat center;">
+				<div class='landing-ovr-panel'>
+					<div class='landing-tx1-panel'>
+						<h2>One Step Ahead</h2>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						<h2>What is ROSSETI licensed under? </h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 ROSSETI uses the GNU General Public License Version 2 (June 1991). According to the license, you are welcome to use ROSSETI and its source code for any purpose, but distributing ROSSETI requires that the source code be released and attribution given. For more details on how the GNU General Public License system works, please refer to <a href="https://www.gnu.org/">GNU.org</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						<h2>How can I get started using ROSSETI on my PC?</h2>
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						<p>
+							 Please refer to the <a href="/quickstart">Quickstart Guide</a> for detailed information on how to get started.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+					
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+					
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+					
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						
+						</p>
+						<br>
+						<p>
+							 
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+					
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+					
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+					
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+					
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+					
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+					
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+					
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class='container-con-block darkmode-block'>
+				<div class='container-con-wrapper'>
+					<div class='container-tx1-block darkmode-txt'>
+						<div class='container-emp-block'>
+						</div>
+						
+					</div>
+					<div class='container-tx2-block darkmode-txt'>
+						
+						</p>
+						<br>
+						
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php include 'lib/module/inc-footer.php';?>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI Token/coin BNB</title>
+<meta charset="utf-8">
+<meta name="description" content="ROSSETI">
+<meta name="keywords" content="ROSSETI TOKENS, debugger, windows, linux, bsd, open source, nekotekina, home">
+<meta name="author" content="ROSSETI TOKENS">
+<meta name="copyright" content="ROSSETI TOKENS">
+<meta name="google-site-verification" content="cO1o6sx54cvKxhbnYsABWtl4sYFj9uVKV0DxLKZkWv8"/>
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+<script data-cfasync="false" src='/lib/js/carousel.js?v=1'></script>
+</head>
+<body>
+<img src="/img/graphics/landing/hero-main.png" width="1" height="1" alt="preload"/>
+<img src="/img/videos/1.jpg" width="1" height="1" alt="Preload"/>
+<img src="/img/videos/2.jpg" width="1" height="1" alt="Preload"/>
+<img src="/img/videos/3.jpg" width="1" height="1" alt="Preload"/>
+<?php include 'lib/module/sys-php.php';?>
+<?php include 'lib/module/inc-video-popout.php'?>
+<?php
+	preloadVideo(
+	'1',
+	'PU3A755xcDQ',
+	'1'
+	);
+	preloadVideo(
+	'2',
+	'57L0OL85ILU',
+	'2'
+	);
+	preloadVideo(
+	'3',
+	'pNmLjPpw5xY',
+	'3'
+	);
+?>
+<div class="page-con-content landing-con-override">
+	<div class="wavebar-con-container-master">
+		<div class="wavebar-con-wrap">
+			<div class="wavebar-svg-object">
+			</div>
+			<div class="wavebar-svg-object">
+			</div>
+		</div>
+	</div>
+	<div class='landing-ico-scrolldown'>
+	</div>
+	<div class="landing-con-main">
+		<div id="object-particles">
+		</div>
+		<div class="content-con-backdrop darkmode-header">
+		</div>
+		<div class="content-con-outside">
+			<div class="content-con-inside">
+				<div class='landing-con-left content-expand '>
+					<div class="landing-con-container scale-content-txt-1 fade-in-onload">
+						<div class='landing-ico-logo'>
+						</div>
+						<div class='landing-tx1-heading pulsate'>
+							<h1>ROSSETI<p> token/coin<br>
+							  is a cryptocurrency, deployed on Binance Smart Chain (BSC BEP-20) </h1>
+						</div>
+						<div class='landing-tx2-heading'>
+							<p>
+								 ROSSETI TOKENS<p>
+                                 Contract:  0x88bcb2a9c54818b967c1c3604633de21b920e227
+							</p>
+							<div class='landing-btn-container'>
+								<div class="build-btn-button">
+									<div class="build-ico-button">
+										<div class="build-ico-os">
+											<img src="img/icons/os/windows.png" style='height: 100%; width: 100%; object-fit: contain'/>
+											<img src="img/icons/os/linux.png" style='height: 100%; width: 100%; object-fit: contain; display:none;'/>
+											<img src="img/icons/os/bsd.png" style='height: 110%; width: 110%; object-fit: contain; display:none;'/>
+										</div>
+									</div>
+									<a href="https://bscscan.com/token/0x88bcb2a9c54818b967c1c3604633de21b920e227" target="_blank">
+										<div class="build-tx1-button">
+										<span>Enter</span>
+										<span class="build-tx2-label">BscScan</span>
+									</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='landing-con-right content-remove '>
+					<div class='landing-img-hero' style="background: url(/img/graphics/landing/hero-main.png) no-repeat center; background-size: contain;">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="landing-con-search darkmode-slimbar">
+		<div class="search-ovr-container">
+		</div>
+		<div class='search-con-container'>
+			<div class="search-con-outer">
+				<div class="search-con-inner">
+					<div class="search-inp-search darkmode-search-border">
+						<div class="search-ico-search darkmode-invert">
+						</div>
+						<div class="search-con-author darkmode-txt">
+							<a href="https://bscscan.com/token/0x88bcb2a9c54818b967c1c3604633de21b920e227" target="_blank">
+							<span class="darkmode-txt">Compatibility DB maintained by <span class="search-img-author"></span>
+							<span class="search-tx1-author">ROSSETI</span>
+							</span>
+							</a>
+						</div>
+						<form action='/compatibility' method='get'>
+							<input class="database-search darkmode-txt darkmode-search-bg" name="g" placeholder="GitHub / ROSSETI ID">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="landing-con-video darkmode-feature">
+		<div class="content-con-outside">
+			<div class="content-btn-left darkmode-arrow-left left" href="#myCarousel" data-slide="prev">
+			</div>
+			<div class="content-btn-right darkmode-arrow-right right" href="#myCarousel" data-slide="next">
+			</div>
+			<div class="content-con-inside">
+				<div class="video-tx1-heading darkmode-txt">
+					<h2>ROSSETI news</h2>
+				</div>
+				<div class="video-con-divider">
+				</div>
+				<?php include 'lib/module/inc-video-carousel.php';?>
+			</div>
+		</div>
+	</div>
+	<div class="landing-con-discord darkmode-discord">
+		<div class="discord-left-logo">
+		     <img src="/img/graphics/svg/discord-left.svg" style="width: 150%; height: 150%;">
+		        </div>
+		<div class="discord-center-logo">
+			<img src="/img/graphics/svg/discord-center.svg" style="width: 50%; height: 50%;">
+		</div>
+		<div class="discord-right-logo">
+			<img src="/img/graphics/svg/discord-right.svg" style="width: 80%; height: 80%;">
+		</div>
+		<div class="content-con-outside">
+			<div class="content-con-inside">
+				<div class="discord-con-container">
+					<div class="discord-con-logo">
+						<div class="discord-img-logo">
+						</div>
+					</div>
+					<div class="discord-con-mantra">
+						<div class="discord-wrp-mantra scale-content-txt-1">
+							<div class="discord-tx1-mantra darkmode-txt">
+								<h2>Trust Wallet</h2>
+								<div class="landing-con-divider">
+								</div>
+							</div>
+							<div class="discord-tx2-mantra darkmode-txt">
+								<p>
+									 Trust Wallet надёжный Кошелёк для токена ROSSETI – это анонимный децентрализованный кошелек для хранения и использования криптовалюты. Ключевой особенностью кошелька является: полная анонимность, высокая надежность (ключи от кошелька хранятся у пользователя + за все время работы в кошельке не было проблем с безопасностью и кражей средств пользователей), простота использования, поддержка многих криптовалют, есть поддержка DApp приложений, обмен и торговля криптовалютой прямо в кошельке. С 2018 года крипто кошельком Trust Wallet владеет крупнейшая биржа криптовалют Binance
+								</p>
+								</div>
+							<a href="https://trustwallet.com/ru/" target="_blank">
+							<div class="discord-btn-button">
+								<div class="discord-ico-button">
+								</div>
+								<div class="discord-tx1-button">
+									<span>Trust Wallet</span>
+								</div>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<svg class="discord-con-animate" preserveaspectratio="none" width="1920" height="100%" viewbox="0 0 1920 330">
+		<path class="discord-svg-animate" fill="#fff" fill-opacity="0.1" d="M140.881198,194.260295 C257.600568,129.32862 342.939626,119.84993 418.009939,203.154617 C493.080251,286.459305 545.728689,70.9046172 636.439626,63.9593047 C727.150564,57.0139922 768.99822,139.670242 858.802907,119.431961 C948.607595,99.1936797 1071.91228,-32.9977266 1243.91228,7.75227342 C1415.91228,48.5022734 1404.10369,208.584305 1508.27166,178.709305 C1612.43963,148.834305 1633.73291,79.913472 1711.63588,98.8569055 C1776.28676,114.577866 1819.96778,221.391836 1889.37253,185.808108 C2017.32661,120.206212 2004.01952,336.769569 2004.01952,336.769569 L271.635881,337 L-149.063338,337 C-149.063338,337 -245.850307,175.637635 -58.0633382,228.867188 C33.8652851,254.92501 64.1722713,236.933925 140.881198,194.260295 Z"></path>
+		</svg>
+	</div>
+	<div class="landing-con-adsense">
+		<div class='adsense-tx1-description darkmode-txt'>
+			<span>Advertisement</span>
+		</div>
+		<div class="adsense-con-container darkmode-slimbar div-css-board-ad">
+			<div class="adsense-con-frame">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+						</script>
+				<ins class="adsense-con-insert adsbygoogle" data-ad-client="ca-pub-9076246674760451" data-ad-slot="1835527222"></ins>
+				<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div>
+		</div>
+	</div>
+	<div class="landing-con-contribute darkmode-github">
+		<div class="github-img-backdrop">
+		</div>
+		<div class="content-con-outside">
+			<div class="content-con-inside">
+				<div class="github-con-container">
+					<div class="github-con-logo">
+						<div class="github-img-logo">
+						</div>
+					</div>
+					<div class="github-con-mantra">
+						<div class="github-wrp-mantra scale-content-txt-1 ">
+							<div class="github-tx1-mantra darkmode-txt">
+								<h2>MetaMask</h2>
+								<div class="landing-con-divider">
+								</div>
+							</div>
+							<div class="github-tx2-mantra darkmode-txt">
+								<p>
+									MetaMask — это безопасное приложение для криптовалютного кошелька, предназначенное для хранения, управления, получения и передачи токенов ROSSETI из Binance Smart Chain. MetaMask очень безопасен, у него миллионы активных пользователей, и он неуклонно растет с лояльными последователями по всему миру. С MetaMask вы владеете ключами к своему криптовалютному кошельку, никакая третья сторона не задействована. Он быстро и легко интегрируется с браузерами, обеспечивая в целом отличный пользовательский интерфейс с минимальными хлопотами при покупке, отправке или получении криптовалюты.
+								</p>
+							</div>
+							<a href="https://metamask.io/" target="_blank">
+							<div class="github-btn-button">
+								<div class="github-ico-button">
+								</div>
+								<div class="github-tx1-button">
+									<span>MetaMask</span>
+								</div>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="landing-con-adsense">
+		<div class='adsense-tx1-description darkmode-txt'>
+			<span>Advertisement</span>
+		</div>
+		<div class="adsense-con-container darkmode-slimbar div-css-board-ad">
+			<div class="adsense-con-frame">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+						</script>
+				<ins class="adsense-con-insert adsbygoogle" data-ad-client="ca-pub-9076246674760451" data-ad-slot="1835527222"></ins>
+				<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div>
+		</div>
+	</div>
+	<div class="landing-con-patreon darkmode-feature">
+		<div class="patreon-img-backdrop">
+		</div>
+		<div class="content-con-outside">
+			<div class="content-con-inside">
+				<div class="patreon-con-container">
+					<div class="patreon-con-logo">
+						<div class="patreon-img-logo">
+						</div>
+					</div>
+					<div class="patreon-con-mantra">
+						<div class="patreon-wrp-mantra scale-content-txt-1 ">
+							<div class="patreon-tx1-mantra">
+								<h2>ROSSETI-PancakeSwap</h2>
+								<div class="landing-con-divider" style="background: #c8a2c8">
+								</div>
+							</div>
+							<div class="patreon-tx2-mantra darkmode-txt">
+								<p>
+									 PancakeSwap – крупнейшая по объему торгов децентрализованная биржа для сети Binance Smart Chain (BSC), это автоматизированный маркет-мейкер (AMM) — приложение децентрализованных финансов (DeFi), которое позволяет пользователям обменивать токены ROSSETI и другие, обеспечивая ликвидность через доходное фермерство и комиссионные платежи. PancakeSwap – яркий представитель нового поколения криптовалютных бирж, которые работают децентрализовано. Платформа уже успела занять заметную позицию на рынке и имеет суточный оборот, достигающий 500$ млн.
+									 </p>Перейти на биржу
+								</p>
+							</div>
+							<a href="https://pancakeswap.finance/info/token/0x88BCb2a9C54818b967c1c3604633De21B920e227" target="_blank">
+							<div class="patreon-btn-button">
+								<div class="patreon-ico-button">
+								</div>
+								<div class="patreon-tx1-button">
+									<span>PancakeSwap</span>
+								</div>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php include 'lib/module/inc-footer.php';?>
+</div>
+</body>
+</html>
+<?php
+// 2018.04.06 - AniLeo
+// Permalink to latest Linux AppImage
+
+/*
+Usage:
+> wget
+
+> curl
+
+*/
+
+require "lib/compat/objects/Build.php";
+$build = Build::get_latest();
+header("Content-Disposition: attachment; filename={$build->filename_linux}");
+header("Location: {$build->get_url_linux()}");
+?>
+
+<?php
+// 2019.01.01 - AniLeo
+// Permalink to latest Windows Build
+
+/*
+Usage:
+> wget
+
+
+> curl
+
+*/
+
+require "lib/compat/objects/Build.php";
+$build = Build::get_latest();
+header("Content-Disposition: attachment; filename={$build->filename_win}");
+header("Location: {$build->get_url_win()}");
+?>
+
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - Quickstart</title>
+<meta charset="utf-8">
+<meta name="description" content="ROSSETI">
+<meta name="keywords" content="ROSSETI">
+<meta name="author" content="ROSSETI">
+<meta name="copyright" content="ROSSETI">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<?php include 'lib/module/inc-sidebar-quickstart.php';?>
+<div class="page-con-content">
+	<div class="banner-con-container darkmode-header">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+				<div class="wavebar-svg-object">
+				</div>
+				<div class="wavebar-svg-object">
+				</div>
+			</div>
+		</div>
+		<div class='banner-con-title fade-up-onstart'>
+			<div class='banner-tx1-title fade-up-onstart pulsate'>
+				<h1>Quickstart</h1>
+			</div>
+			<div class='banner-con-divider'>
+			</div>
+			<div class="banner-tx2-title fade-up-onstart">
+				<p>
+					 Get ROSSETI up and running on your PC
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class="landing-con-panel" style="background: url('/img/graphics/panels/quickstart.jpg') no-repeat center;">
+				<div class='landing-ovr-panel'>
+					<div class='landing-tx1-panel'>
+						<h2>Hardware Check</h2>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="requirements_desktop">
+				</div>
+				<div class="container-con-wrapper">
+					<div class="container-tx1-block darkmode-txt">
+						<div class='container-emp-block'>
+						</div>
+						<h2>Desktop Requirements</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 The hardware requirements for running the emulator vary depending on your current configuration. We have listed the minimum and recommend hardware requirements below. For the best experience, users should be running within the recommended requirements. We cannot guarantee the performance of system specifications below the recommended requirements but you're always welcome to experiment.
+						</p>
+					</div>
+				</div>
+			</div>
+			<?php include 'lib/module/inc-specs.php';?>
+			<div class="container-con-wrapper">
+				<div class="anchor-point" id="requirements_laptop">
+				</div>
+				<div class="container-tx1-block darkmode-txt">
+					<h2>Laptop PC Requirements</h2>
+				</div>
+				<div class="container-tx2-block darkmode-txt">
+					<p>
+						 We recommend using a laptop equipped with an <span class="highlight darkmode-highlight">8-core/16-thread</span> 35W+ H-series CPU such as an Intel Core i7-10870H or an AMD Ryzen 7 5800H, as well as having a compatible <span class="highlight darkmode-highlight">dedicated GPU (dGPU)</span> with Vulkan compatibility. While being a tall order, this is the ideal spec and we cannot guarantee even remotely good performance with laptops equipped with as little as 4-cores.<br>
+						<br>
+						 We strongly recommend using ROSSETI with a desktop PC over a laptop. Should you want to use a laptop, these are the hardware requirements for an optimal experience.
+					</p>
+				</div>
+			</div>
+			<div class="container-con-wrapper">
+				<div class="anchor-point" id="requirements_software">
+				</div>
+				<div class="container-tx1-block darkmode-txt">
+					<h2>Software Requirements</h2>
+				</div>
+				<div class="container-tx2-block darkmode-txt">
+					<p>
+						 The software requirements for running the emulator must be met in order for the software to function at all. .<br>
+						<br>
+						<span class="context-important">Please note - </span> A 64-bit operating system is required. Windows 7, 8, 10 and 11 are supported as well as Linux and BSD. <br>
+					</p>
+				</div>
+			</div>
+			<div class="generic-con-button ">
+				<a href='https://www.playstation.com/en-us/support/hardware/ps3/system-software/' target="_blank">
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/playstation-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>ROSSETI <span class="generic-tx2-label">Required*</span></span>
+					</div>
+				</div>
+				</a>
+				<a href='https://aka.ms/vs/16/release/VC_redist.x64.exe' target="_blank">
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/redist-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>Visual C++ 2019 Redistributable <span class="generic-tx2-label">Windows*</span></span>
+					</div>
+				</div>
+				</a>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="update_rosseti">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Installing ROSSETI Updates</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 ROSSETI features an auto-updater which will prompt you if you want to update after loading the emulator. You can either accept, deny or disable updates all together if you wish, though it is not recommended due to the volume of fixes that roll out each day. In the instance that you need to update ROSSETI manually, you can follow the following instructions:
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="guide-con-content context-windows darkmode-panel">
+				<div class='guide-ico-content darkmode-invert' style="background: url('/img/icons/buttons/windows.png') no-repeat center;">
+				</div>
+				<div class="guide-tx1-heading darkmode-txt">
+					<p>
+						 For Windows users, download the latest build and drag and drop all files into your ROSSETI root directory, replacing all files when prompted.
+					</p>
+				</div>
+			</div>
+			<div class="guide-con-content context-linux darkmode-panel">
+				<div class='guide-ico-content darkmode-invert' style="background: url('/img/icons/buttons/linux.png') no-repeat center;">
+				</div>
+				<div class="guide-tx1-heading darkmode-txt">
+					<p>
+						 For Linux users, download the latest AppImage and make it executable with the command <span class="linux-highlight darkmode-highlight">chmod a+x ./linux64.AppImage</span>
+					</p>
+				</div>
+			</div>
+			<div class="guide-con-content context-bsd darkmode-panel">
+				<div class='guide-ico-content darkmode-invert' style="background: url('/img/icons/buttons/bsd.png') no-repeat center;">
+				</div>
+				<div class="guide-tx1-heading darkmode-txt">
+					<p>
+						 For BSD users, check your system package manager</span>
+					</p>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="install_rosseti_firmware">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Installing ROSSETI</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							  <a href="https://www.playstation.com/en-us/support/hardware/ps3/system-software/"></a> . Once downloaded, you must install the firmware using built in firmware installer found under <span class="highlight darkmode-highlight">File &gt; Install Firmware.</span><br>
+							<br>
+							 By default, firmware modules are loaded automatically based on the title that is loaded. You can still override automatic module loading and choose which firmware modules you want to use manually. This is not recommended.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="manage_playstation_3_game_data">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Managing Data</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 
+						</p>
+						<br>
+						<p>
+							 Both Blu-ray and PlayStation Network titles (PSN) must be placed into a single folder with their respective files and the folder name must correspond to the title's ID. If you are not sure what your dumped title's region ID is, you can find your region ID on the bottom side-edge of your game case. If you are no longer in possession of your title's game case or your title is only accessible through PSN, you can do an internet search for <span class="highlight darkmode-highlight">"Your game name here</span> + <span class="highlight darkmode-highlight">region ID"</span>. Please note that it is very important that you use the correct region ID. <br>
+							<br>
+							<p>
+								 Typical layout of a Blu-ray disc title's directory: <span class="highlight darkmode-highlight"></span>
+							</p>
+							<p>
+								 Typical layout of a PSN title's directory: <span class="highlight darkmode-highlight">TROPDIR folder, USRDIR folder, ICON0.png, PARAM.sfo, etc</span>
+							</p>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="manage_playstation_3_save_data">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Managing Save Data</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 PlayStation 3 save data is specific to each game and saves the progress for your installed games. Should you want to modify, back up or import your own save data from a real PlayStation 3, here are the following locations where save data is stored per operating system:
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="guide-con-content context-windows darkmode-panel">
+				<div class="anchor-point" id="manage_playstation_3_saves">
+				</div>
+				<div class='guide-ico-content darkmode-invert' style="background: url('/img/icons/buttons/windows.png') no-repeat center;">
+				</div>
+				<div class="guide-tx1-heading darkmode-txt">
+					<p>
+						 For Windows users, save data files can be managed in <span class="highlight darkmode-highlight">\dev_hdd0\home\00000001\savedata\</span>
+					</p>
+				</div>
+			</div>
+			<div class="guide-con-content context-linux darkmode-panel">
+				<div class='guide-ico-content darkmode-invert' style="background: url('/img/icons/buttons/linux.png') no-repeat center;">
+				</div>
+				<div class="guide-tx1-heading darkmode-txt">
+					<p>
+						 For Linux users, save data files can be managed in <span class="linux-highlight darkmode-highlight">~/.config/dev_hdd0/</span>
+					</p>
+				</div>
+			</div>
+			<div class="guide-con-content context-bsd darkmode-panel">
+				<div class='guide-ico-content darkmode-invert' style="background: url('/img/icons/buttons/bsd.png') no-repeat center;">
+				</div>
+				<div class="guide-tx1-heading darkmode-txt">
+					<p>
+						 For BSD users, save data files can be managed in <span class="bsd-highlight darkmode-highlight">~/.config/dev_hdd0/</span>
+					</p>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="manage_playstation_3_formats">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Managing Formats</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 Title IDs that start with a <span class="highlight darkmode-highlight">B</span> are <span class="highlight darkmode-highlight">Blu-Ray disc</span> titles.
+						</p>
+						<p>
+							 Title IDs that start with a <span class="highlight darkmode-highlight">N</span> are <span class="highlight darkmode-highlight">PSN</span> titles.
+						</p>
+						<br>
+						<p>
+							 When working with actual title region IDs, the title's region ID will look something similar to this:
+						</p>
+						<br>
+						<p>
+							 Example: <span class="highlight darkmode-highlight">BLUS30443</span> is a <span class="highlight darkmode-highlight">US</span> Blu-Ray disc copy of Demon's Souls.
+						</p>
+						<p>
+							 Example: <span class="highlight darkmode-highlight">NPEB01393</span> is a <span class="highlight darkmode-highlight">EU</span> PSN copy of Hatsune Miku: Project DIVA F.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="install_playstation_3_games">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Installing PlayStation 3 Games</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 .pkg files must be extracted using built-in package installer found under <span class="highlight darkmode-highlight">File &gt; Install .pkg</span> (or simply drag and drop .pkg to the main emulator window)
+						</p>
+						<p>
+							 .pkg files will be automatically installed to <span class="highlight darkmode-highlight">\dev_hdd0\game\</span>
+						</p>
+						<p>
+							 Blu-ray disc title data can be placed in <span class="highlight darkmode-highlight">\dev_hdd0\disc\</span> or anywhere else except for <span class="highlight darkmode-highlight">\dev_hdd0\game\</span> and can be booted from <span class="highlight darkmode-highlight">File &gt; Boot Game</span> if not present on the game list.
+						</p>
+						<p>
+							 PSN title data must be placed in <span class="highlight darkmode-highlight">\dev_hdd0\game\</span>
+						</p>
+						<p>
+							 PSN .rap files must be placed in <span class="highlight darkmode-highlight">\dev_hdd0\home\00000001\exdata\</span> (or simply drag and drop them to the main emulator window)
+						</p>
+						<br>
+						<p>
+							<i>Note: If you're on Linux, folders are located in <span class="highlight darkmode-highlight">~/.config/dev_hdd0/</span></i>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="install_playstation_3_updates">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Installing PlayStation 3 Game Updates</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 Title updates are handled the same as PSN .pkg files. The. pkg update file must be installed using  built-in package installer found under <span class="highlight darkmode-highlight">File &gt; Install .pkg</span><br>
+							 The update will be placed in the title folder that corresponds to the correct region ID. Please note that title updates must be the same region in order to work. Cross-mixing title regions may create irreversible damage to the title.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="software_distribution">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block">
+						<div class='container-emp-block' style="background: #FF3434;">
+						</div>
+						<h2>Software Distribution laws in your country</h2>
+					</div>
+					<div class="container-tx2-block">
+						<p>
+							 When dumping video game software, users are subject to country-specific software distribution laws. ROSSETI is not designed to enable illegal activity. We do not promote piracy nor do we allow it under any circumstances. Please take the time to review copyright and video game software dumping laws and/or policies for your country before proceeding.<br>
+							<br>
+							 By following these instructions, you will do so at your own discretion. Should you follow these instructions against your local law, we shall not be held responsible for your actions.
+						</p>
+					</div>
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="anchor-point" id="dumping_with_playstation_3">
+					</div>
+					<div class="container-tx1-block">
+						<h2>Dumping with a PlayStation 3</h2>
+					</div>
+					<div class="container-tx2-block">
+						<p>
+							 We recommend that you dump your own titles from your own console. This is the most compatible way to migrate your disc-based titles and the only way to dump digital titles to your PC. To do this, you will need a system with custom firmware.<br>
+							<br>
+							 For dumping disc-based games, you need to use multiMAN homebrew software in order to dump your disc files. You can transfer those files over to a computer through an external drive or using a FTP connection between your and your computer.<br>
+							<br>
+							<i>Note: The has a maximum file size of 4GB. When dumping games which contain files bigger than 4GB, multiMAN will split those files. When you have your dump over on your computer, you must rejoin the split files back together with part merging software such as <a href="http://karmian.org/projects/ps3merge">ps3merge</a>, otherwise the dump won't work.</i><br>
+							<br>
+							 For dumping digital games, you must copy the game folder from dev_hdd0/game/GameID on your console over to the same path on your ROSSETI folder. You also need to get your console's IDPS, the game's RIF and ACT.DAT, in order to generate a .RAP license file to be used in the emulator.<br>
+							 It is also possible to dump digital content and licenses on <i>any</i> PS3 even without custom firmware, by the way of creating a system backup, and then extracting it with ps3xport software.
+						</p>
+					</div>
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="anchor-point" id="dumping_with_pc">
+					</div>
+					<div class="container-tx1-block">
+						<h2>Dumping with a Desktop PC</h2>
+					</div>
+					<div class="container-tx2-block">
+						<p>
+							 You can dump titles using your computer by using select compatible Blu-ray drives. Please note that you can only use this method if a .ird file is available online for the decryption of the disc. Not every Blu-ray drive will recognize PlayStation 3 titles due to how PlayStation 3 format discs are designed. Requirements for a Blu-Ray drive to be able to fully read PlayStation 3 discs are: Mediatek chipset and a +6 read offset.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="compatible_bd_drives">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Compatible Desktop PC Blu-ray Drives</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 Here's a compiled list of the known compatible Blu-ray drives that are capable of reading PlayStation format discs for use with your computer.
+						</p>
+					</div>
+				</div>
+			</div>
+			<?php include 'lib/module/inc-bdds.php';?>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="dumping_with_linux">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Dumping with Linux Command Line</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 If you're comfortable with the Linux command-line and you have a compatible Blu-ray drive, you can try ripping PlayStation 3 discs using a Python program called <a href="https://notabug.org/necklace/libray" target="_blank" rel="noopener noreferrer">LibRay</a>.
+						</p>
+						<p>
+							 Do note that this method requires an .ird file that matches your title ID to be available on <a href="http://jonnysp.bplaced.net" target="_blank" rel="noopener noreferrer">jonnysp.bplaced.net</a>. (libray will automatically attempt to download the correct .ird file, if it exists, so you do not need to do so manually.) If a matching .ird file is not present, please try the PS3 Disc Dumper mentioned below.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="generic-con-button ">
+				<a href='https://notabug.org/necklace/libray' target="_blank">
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/github-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>LibRay <span class="generic-tx2-label">30KB - Necklace</span></span>
+					</div>
+				</div>
+				</a>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="dumping_with_disc_dumper">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Dumping with Disc Dumper</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 This is an automated &amp; user-friendly way of getting a decrypted copy of your PlayStation 3 discs. You must possess one of the aforementioned compatible disc drives to complete the disc dumping procedure. Again, this method will not work with standard Blu-ray drives.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="generic-con-button ">
+				<a href='https://github.com/13xforever/ps3-disc-dumper/releases/latest' target="_blank">
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/discdumper-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>Disc Dumper <span class="generic-tx2-label">36 MB - 13xforever</span></span>
+					</div>
+				</div>
+				</a>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 1
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Insert a format disc title of your choice into your compatible Blu-ray drive.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 2
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Run the Disc Dumper.
+					</p>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="dumping_step_by_step">
+				</div>
+				<div class='container-con-wrapper'>
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Dumping Step-by-step</h2>
+					</div>
+					<div class="container-tx2-block darkmode-txt">
+						<p>
+							 In case the easy way didn't work for you, here's a compiled list of the step-by-step instructions we used for dumping disc-based titles.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="generic-con-button ">
+				<a href='/cdn/tools/patcher.zip' download>
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/patcher-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>.iso Patcher <span class="generic-tx2-label">78 KB - BlackDaemon</span></span>
+					</div>
+				</div>
+				</a>
+				<a href='/cdn/tools/3k3y.zip' download>
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/3k3y-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>.iso Tools <span class="generic-tx2-label">3.3 MB - 3K3Y</span></span>
+					</div>
+				</div>
+				</a>
+				<a href="https://www.imgburn.com" target="_blank" rel="noopener noreferrer">
+				<div class="generic-btn-button">
+					<div class="generic-ico-button" style="background: url('/img/icons/buttons/imgburn-h.png') no-repeat center">
+					</div>
+					<div class="generic-tx1-button">
+						<span>ImgBurn <span class="generic-tx2-label">3.8 MB - Lightning UK!</span></span>
+					</div>
+				</div>
+				</a>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 1
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Insert a format disc title of your choice into your compatible Blu-ray drive.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 2
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Create the .iso image using an .iso dumping program of your choosing, e.g. ImgBurn or IsoBuster.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 3
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Use <a href="http://jonnysp.bplaced.net" target="_blank" rel="noopener noreferrer">jonnysp.bplaced.net</a> to download the appropriate .ird file that matches your title ID. If there isn't an .ird file that matches your title ID, you cannot use this method to dump your selected PlayStation 3 disc at this time.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 4
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Be sure to check the title ID in case there is a different edition of that title. e.g. Uncharted 2 Game of the Year Edition. You must use the correct .ird with the same title ID, otherwise it won't work. (<i>Example: .ird file for Demon's Souls US disc doesn't work with Demon's Souls EU disc</i>).
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 5
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Using ROSSETI ISO Patcher, select the matching .iso and .ird files, then press Patch to apply the decryption keys to the .iso file.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 6
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Using 3K3Y IsoTools press Decrypt button and select the .iso with patched-in decryption keys. This will produce decrypted .dec.iso file.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 7
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 Optionally, validate that you have successfully obtained the correct copy of your game. <br>
+						 You will need to install ROSSETI ISO Rebuilder tool from <a href="http://jonnysp.bplaced.net" target="_blank" rel="noopener noreferrer">jonnysp.bplaced.net</a>
+						<br>
+						 Load your .dec.iso file and your .ird file in the program and let it verify the dump. All of your files must be either Valid or Not required.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 8
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 In 3K3Y ISO Tools, use the Tools drop-down menu to select <span class="highlight darkmode-highlight">ISO > Extract ISO</span> and then select the decrypted .iso file to extract its files.<br>
+						 Another option is to use 7-zip or any other software that is capable of extracting .iso images.
+					</p>
+				</div>
+			</div>
+			<div class='list-con-container'>
+				<div class='list-tx1-item darkmode-txt'>
+					 9
+				</div>
+				<div class='list-tx2-description darkmode-txt'>
+					<p>
+						 You are now able to use the extracted .iso files with ROSSETI.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php include 'lib/module/inc-footer.php';?>
+</body>
+</html>
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>ROSSETI - Roadmap</title>
+<meta charset="utf-8">
+<meta name="description" content="ROSSETI.">
+<meta name="keywords" content="ROSSETI, emulator, debugger, windows, linux, bsd, open source, nekotekina, kd11, roadmap">
+<meta name="author" content="ROSSETI">
+<meta name="copyright" content="ROSSETI">
+<?php include 'lib/module/sys-meta.php';?>
+<?php include 'lib/module/sys-css.php';?>
+<?php include 'lib/module/sys-js.php';?>
+</head>
+<body>
+<?php include 'lib/module/sys-php.php';?>
+<div class="page-con-content">
+	<div class="banner-con-container darkmode-header">
+		<div id="object-particles">
+		</div>
+		<div class="wavebar-con-container">
+			<div class="wavebar-con-wrap">
+				<div class="wavebar-svg-object">
+				</div>
+				<div class="wavebar-svg-object">
+				</div>
+			</div>
+		</div>
+		<div class="banner-con-backdrop darkmode-header">
+		</div>
+		<div class='banner-con-title fade-up-onstart'>
+			<div class='banner-tx1-title fade-up-onstart pulsate'>
+				<h1>Roadmap</h1>
+			</div>
+			<div class='banner-con-divider'>
+			</div>
+			<div class='banner-tx2-title fade-up-onstart'>
+				<p>
+					 Goals that have been set for the project
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="page-con-container">
+		<div class="page-in-container">
+			<div class="landing-con-panel" style="background: url('/img/graphics/panels/roadmap.jpg') no-repeat center;">
+				<div class='landing-ovr-panel'>
+					<div class='landing-tx1-panel'>
+						<h2>Endless Integration</h2>
+					</div>
+				</div>
+			</div>
+			<div class="markdown darkmode-block">
+				<?php
+				if (file_exists('cache/roadmap_cached.php'))
+				{
+					include 'cache/roadmap_cached.php';
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php include 'lib/module/inc-footer.php';?>
+</body>
+</html>
+User-agent: *
+Allow: /
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+	http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>https://rpcs3.net/</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/blog</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/about</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/compatibility</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/download</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/quickstart</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/roadmap</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/faq</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/disclaimer</loc>
+</url>
+<url>
+  <loc>https://rpcs3.net/alipay</loc>
+</url>
+<url>
+  <loc>https://forums.rpcs3.net/</loc>
+</url>
+<url>
+  <loc>https://wiki.rpcs3.net/</loc>
+</url>
+</urlset>
