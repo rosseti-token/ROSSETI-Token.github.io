@@ -1,0 +1,17 @@
+<?php
+// 2018.04.06 - AniLeo
+// Permalink to latest Linux AppImage
+
+/*
+Usage:
+> wget
+
+> curl
+
+*/
+
+require "lib/compat/objects/Build.php";
+$build = Build::get_latest();
+header("Content-Disposition: attachment; filename={$build->filename_linux}");
+header("Location: {$build->get_url_linux()}");
+?>
