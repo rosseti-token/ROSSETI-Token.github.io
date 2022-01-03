@@ -1,0 +1,18 @@
+<?php
+// 2019.01.01 - AniLeo
+// Permalink to latest Windows Build
+
+/*
+Usage:
+> wget
+
+
+> curl
+
+*/
+
+require "lib/compat/objects/Build.php";
+$build = Build::get_latest();
+header("Content-Disposition: attachment; filename={$build->filename_win}");
+header("Location: {$build->get_url_win()}");
+?>
